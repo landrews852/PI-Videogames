@@ -1,6 +1,8 @@
 const { Videogame, Genre, Op } = require("../db");
 const axios = require("axios");
 const { API_KEY } = process.env;
+const { loadDb } = require('../loadDb');
+
 
 const getDbInfo = async () => {
     return await Videogame.findAll({
@@ -33,7 +35,7 @@ const getDbInfo = async () => {
   // }
 
   const getVideogames = async (req, res) => {
-    let videogames = await getAllVidegames(); //Deposita todo los datos de la db;
+    let videogames = await getAllVideogames(); //Deposita todo los datos de la db;
     try {
       videogames.length
         ? res.status(200).json(videogames)
@@ -45,7 +47,7 @@ const getDbInfo = async () => {
   
   const getVideogameById = async (req, res) => {
     const id = req.params.id;
-    let videogames = await getAllVideogame(); //Deposita todo los datos de la db;
+    let videogames = await getAllVideogames(); //Deposita todo los datos de la db;
     if (id) {
       try {
       let videogame = videogames.filter((fl) => fl.id.toUpperCase() === id);

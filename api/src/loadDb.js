@@ -4,7 +4,7 @@ const { API_KEY } = process.env;
 
 const getApiInfo = async () => {
   const apiUrl = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
-  const apiInfo = await apiUrl.data.map((mp) => {
+  const apiInfo = await apiUrl().data.map((mp) => {
     return {
       name: mp.name,
       description: mp.description,
@@ -15,7 +15,7 @@ const getApiInfo = async () => {
       genres: mp.genres,
     };
   });
-  // console.log(apiInfo);
+  console.log(apiInfo);
   return apiInfo;
 };
 
