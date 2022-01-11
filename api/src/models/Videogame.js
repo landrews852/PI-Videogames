@@ -16,14 +16,14 @@ module.exports = (sequelize) => {
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
     },
-    platforms: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+    // platforms: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    // },
     rating: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
     },
     released: {
       type: DataTypes.DATE,

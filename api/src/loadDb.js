@@ -3,19 +3,22 @@ const { Videogame } = require('./db');
 const { API_KEY } = process.env;
 
 const getApiInfo = async () => {
-  const apiUrl = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
-  const apiInfo = await apiUrl().data.map((mp) => {
+  const {data} = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
+  // console.log("1", data);
+  const apiInfo = data.results.map((mp) => {
+    // console.log("2", apiInfo);
     return {
       name: mp.name,
       description: mp.description,
       platforms: mp.platforms,
       img: mp.background_image,
-      rating: mp.ratings,
+      rating: mp.rating,
       released: mp.released,
-      genres: mp.genres,
+      // genres: mp.genres.map(el => el.nameGenre),
+      genres: mp.genres.map(el => el.name),
     };
   });
-  console.log(apiInfo);
+  console.log("apiInfo", apiInfo);
   return apiInfo;
 };
 
