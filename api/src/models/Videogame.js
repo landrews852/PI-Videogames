@@ -10,6 +10,9 @@ module.exports = (sequelize) => {
       primaryKey: true,
       allowNull: false,
     },
+    apiId: {
+      type: DataTypes.STRING,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -18,10 +21,10 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       // allowNull: false,
     },
-    // platforms: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    // },
+    platforms: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: false,
+    },
     rating: {
       type: DataTypes.STRING,
     },
