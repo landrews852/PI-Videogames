@@ -74,7 +74,7 @@ export function getGenres() {
 
 export function getPlatforms() {
   return async function (dispatch) {
-    var json = await axios.get('http://localhost:3001/games/');
+    var json = await axios.get('http://localhost:3001/');
 
     dispatch({
       type: 'GET_PLATFORMS',
@@ -83,40 +83,42 @@ export function getPlatforms() {
   };
 }
 
-export function getVideogameId(id) {
-  return async function (dispatch) {
-    var json = await axios.get('http://localhost:3001/videogames/' + id);
 
-    dispatch({
-      type: 'GET_VIDEOGAME_DETAIL',
-      payload: json.data,
-    });
+export function filterCountriesContinent(payload) {
+  // return async function (dispatch) {
+  // var json = await axios.get("http://localhost:3001/countries");
+
+  return {
+    type: 'FILTER_BY_CONTINENT',
+    payload,
+  };
+  // };
+}
+
+export function setSort(payload) {
+
+  return {
+    type: 'SET_SORT',
+    payload: {
+      asc: payload,
+    },
   };
 }
 
-// export function filterCountriesContinent(payload) {
-//   // return async function (dispatch) {
-//   // var json = await axios.get("http://localhost:3001/countries");
+export function ratingSort(payload) {
 
-//   return {
-//     type: 'FILTER_BY_CONTINENT',
-//     payload,
-//   };
-//   // };
-// }
+  return {
+    type: 'RATING_SORT',
+    payload,
+  };
+}
 
-// export function setCountriesSort(payload) {
-//   // return async function (dispatch) {
-//   // var json = await axios.get("http://localhost:3001/countries");
-
-//   return {
-//     type: 'SET_SORT',
-//     payload: {
-//       asc: payload,
-//     },
-//   };
-//   // };
-// }
+export function filterByGenres(payload) {
+  return {
+    type: 'FILTER_BY_GENRES',
+    payload,
+  };
+}
 
 // export function deleteActivity(id) {
 //   return async function (dispatch) {

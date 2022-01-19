@@ -33,7 +33,12 @@ module.exports = (sequelize) => {
     },
     img: {
       type: DataTypes.STRING,
+    },
+    gId: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+    },
+    createdInDb: {
+      type: DataTypes.BOOLEAN,
     }
-    
   });
 };

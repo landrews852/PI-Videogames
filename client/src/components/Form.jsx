@@ -123,14 +123,13 @@ export default function Form(){
     }, [dispatch])
 
     useEffect(() => {
-        // console.log(genres)
+        // console.log(platforms)
         dispatch(getPlatforms())
     }, [dispatch])
 
 
 return (
-    <div>
-    <Link to="/home"><button className="btn">Back</button></Link>
+    <div className="form-main-container">
         <form className="form" onSubmit={handleOnSubmit}>
         <div>
             <label className="label">Name: </label>
@@ -139,30 +138,24 @@ return (
 
         <div>
             <label className="label">Description: </label>
-            <input type="text" className="description-input" name="duration" value={state.description} placeholder="Description here..." onChange={handleChange} />
+            <input type="text" className="description-input" name="description" value={state.description} placeholder="Description here..." onChange={handleChange} />
         </div>
         <div>
             <label className="label">Released date: </label>
             <input type="date" className="released-input" name="released" value={state.released} placeholder="Released date here..." onChange={handleChange} />
         </div>
-            {/* <div>
-                <label className="label">Genres: </label>
-                <select className="select" name="genres" onChange={handleChange}>
-                <option value="---">Select Genres</option>
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-                <option value={5}>5</option>
-                </select>
-            </div> */}
             <div>
                 <label className="label">Platforms: </label>
-                <select className="select" name="season" onChange={handleSelectPlatform} value={state.id}>
+                <select className="select" name="season" onChange={handleSelectPlatform} value={state.name}>
                     <option>Select video game platforms: </option>
-                    {platforms?.map(mp => (
+                    {platforms?.map((platform, i) => {
+                        return (
+                            <option key={i} value={platform} >{platform}</option>
+                            )
+                        })}
+                    {/* {platforms?.map(mp => (
                         <option key={mp.name} value={mp.name}>{mp.name}</option>
-                ))}
+                    ))} */}
                 {/* <div><ul><li>{state.cId.map(el => el + ", ")}</li></ul></div> */}
                 {/* {console.log(state.cId)} */}
                 <div> { state.cId && state.cId.map( mp => ( <ul className='countries-creates' key={mp}>{mp}</ul>) ) } </div>
@@ -174,13 +167,16 @@ return (
                     <option>Select video game ganres: </option>
                     {genres?.map(mp => (
                         <option key={mp.name} value={mp.id}>{mp.name}</option>
-                ))}
+                        ))}
                 {/* <div><ul><li>{state.gId.map(el => el + ", ")}</li></ul></div> */}
                 {/* {console.log(state.gId)} */}
                 <div> { state.gId && state.gId.map( mp => ( <ul className='countries-creates' key={mp}>{mp}</ul>) ) } </div>
                 </ select>
             </div>
+            <div className="form-btn-container">
             <button className="btn" >Add your video game</button>
+<Link to="/home"><button className="btn">Back</button></Link>
+            </div>
         </form>
   </div>
   )

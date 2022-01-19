@@ -7,8 +7,10 @@ import Card from './Card';
 import Paginate from './Paginate';
 import {
   getVideogames,
-//   filterCountriesContinent,
-//   setCountriesSort,
+  getGenres,
+  setSort,
+  ratingSort,
+  filterByGenres,
 } from '../redux/actions';
 import SearchBar from './SearchBar';
 import './Home.css';
@@ -21,6 +23,10 @@ export default function Home() {
     (state) => state.videogames,
     () => false
   );
+
+  const genres = useSelector(state => state.genres)
+
+  const [order, setOrder] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const videogamesPerPage = 15;
@@ -44,10 +50,40 @@ export default function Home() {
     console.log(getVideogames);
   }
 
+
+
+  function handleSortBy(e) {
+    dispatch(setSort(e.target.value === 'asc'));
+    setCurrentPage(1);
+  }
+
+  function handleRatingSort(e) {
+    dispatch(ratingSort(e.target.value));
+    setCurrentPage(1);
+  }
+
+  // function handleRatingSort(e) {
+  //   dispatch(ratingSort(e.target.value));
+  //   setCurrentPage(1);
+  //   setOrder(e.target.value);
+  // }
+
+  function handleFilterGenres(e) {
+    dispatch(filterByGenres(e.target.value));
+    setCurrentPage(1);
+  }
+
+  useEffect(() => {
+    // console.log(genres)
+    dispatch(getGenres())
+}, [dispatch])
+
+  
+  console.log(videogames);
   return (
     <div className="home">
       <div className="main_container">
-        <h1>All videogames for you!</h1>
+        <h1 className='text-title'>All videogames for you!</h1>
         <Link to="/new">
           <button className="btn">Create new Videogame</button>
         </Link>
@@ -64,24 +100,26 @@ export default function Home() {
         <SearchBar />
       </div>
       <div className="select_container">
-        <h2 className="sort-by">Sort by:</h2>
-        {/* <select onChange={(e) => handleSortBy(e)}> */}
-        <select>
-          <option value="asc">Sort By:</option>
+        <h2 className="sort-by">Alphabetical order:</h2>
+        <select onChange={(e) => handleSortBy(e)}>
+          <option value="All">Sort by</option>
           <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
         </select>
-        {/* <select onChange={(e) => handleFilterContinent(e)}> */}
-        <select>
-          <option value="All">Filter by continent:</option>
-          <option value="South America"> South America </option>
-          <option value="North America"> North America </option>
-          <option value="Europe"> Europe </option>
-          <option value="Africa"> Africa </option>
-          <option value="Asia"> Asia </option>
-          <option value="Oceania"> Oceania </option>
+        </div>
+        <div className="select_container">
+        <label className="sort-by">Rating order:</label>
+        <select onChange={(e) => handleRatingSort(e)}>
+          <option value="rAsc">Select the parameter</option>
+          <option value="rAsc">Ascending</option>
+          <option value="rDesc">Descending</option>
         </select>
-        <option value="activity">Activity</option>
+        <select className="filter-genres" name="genres" onChange={handleFilterGenres}>
+          <option value="All">Select video game ganres: </option>
+            {genres && genres.length > 0 ? genres.map(mp => (
+              <option key={mp.id} value={mp.name} >{mp.name}</option>
+            )) : null}
+        </select>
       </div>
       <div className='paginate-container'>
         <div className="paginate">
@@ -102,13 +140,16 @@ export default function Home() {
                       className="card"
                       img={videogame.img}
                       name={videogame.name}
-                      continent={videogame.continent}
+                      gId={videogame.gId}
                     />
                   </Link>
                 </div>
               );
             })
-          : (<img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/b6e0b072897469.5bf6e79950d23.gif" />)}
+          : (<div className="loadingio-spinner-bean-eater-uadipf1mxbg"><div className="ldio-7unr3t66ct2">
+          <div><div></div><div></div><div></div></div><div><div></div><div></div><div></div></div>
+          </div></div>)}
+          {/* : (<img className="loading-img" src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/b6e0b072897469.5bf6e79950d23.gif" />)} */}
       </div>
     </div>
   );

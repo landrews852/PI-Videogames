@@ -31,6 +31,7 @@ const getApiInfo = async () => {
         rating: mp.rating,
         released: mp.released,
         genres: mp.genres.map(e => e.name),
+        gId: mp.genres.map(e => e.name),
       };
     });
     return games;

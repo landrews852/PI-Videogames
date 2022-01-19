@@ -31,7 +31,7 @@ const getAllVideogames = async () => {
 const getVideogames = async (req, res) => {
   let videogames = await getAllVideogames(); //Deposita todo los datos de la db;
   try {
-    console.log(videogames[0].genres);
+    console.log(videogames.gId);
     videogames.length
       ? res.status(200).json(videogames)
       : res.status(404).send('Not found... ):');
@@ -58,14 +58,15 @@ const getVideogames = async (req, res) => {
   
 const getVideogameById = async (req, res) => {
   const {id} = req.params;
-  // console.log(req.params);
+  console.log(req.params);
   try {
-    const videogameId = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
+    if(id < 10) {
+    const {videogameId} = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
     // const videogame = []
-    console.log(videogameId.data);
+    console.log(videogameId);
     videogameId
-    ? res.status(200).json(videogameId.data)
-    : res.status(404).send('Not found... ):');
+      ? res.status(200).json(videogameId.data)
+      : res.status(404).send('Not found... ):');
       // const videogame = videogameId.values.filter(mp => {
         // return {
         //   img: mp.background_image,
@@ -79,6 +80,13 @@ const getVideogameById = async (req, res) => {
       //   });
       //   console.log(videogame, 'videogame');
       // res.status(200).json(videogame);
+    } else {
+      const videogame = await getAllVideogames();
+      const videogameId = videogame.find((e) => e.id === id);
+      videogameId
+      ? res.status(200).json(videogameId)
+      : res.status(404).send('Not found... ):');
+    }
   } catch (error) {
     res.status(500).send(error);
   }
@@ -104,6 +112,7 @@ const getVideogameByName = async (req, res) => {
             rating: mp.rating,
             released: mp.released,
             genres: mp.genres.map(e => e.name),
+            gId: mp.genres.map(e => e.name),
           };
         }) 
         console.log(games.length);
@@ -174,6 +183,7 @@ const addVideogame = async (req, res) => {
         rating,
         genres,
         platforms,
+        createdInDb: true
       });
 
       for (const genreId of gId) {
