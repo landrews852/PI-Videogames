@@ -32,6 +32,7 @@ const getApiInfo = async () => {
         released: mp.released,
         genres: mp.genres.map(e => e.name),
         gId: mp.genres.map(e => e.name),
+        createdInDb: false
       };
     });
     return games;

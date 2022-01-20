@@ -26,7 +26,7 @@ export default function Home() {
 
   const genres = useSelector(state => state.genres)
 
-  const [order, setOrder] = useState("");
+  // const [order, setOrder] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const videogamesPerPage = 15;
@@ -100,7 +100,7 @@ export default function Home() {
         <SearchBar />
       </div>
       <div className="select_container">
-        <h2 className="sort-by">Alphabetical order:</h2>
+        <label className="sort-by">Alphabetical order: </label>
         <select onChange={(e) => handleSortBy(e)}>
           <option value="All">Sort by</option>
           <option value="asc">Ascending</option>
@@ -108,17 +108,26 @@ export default function Home() {
         </select>
         </div>
         <div className="select_container">
-        <label className="sort-by">Rating order:</label>
+        <label className="sort-by">Rating order: </label>
         <select onChange={(e) => handleRatingSort(e)}>
           <option value="rAsc">Select the parameter</option>
           <option value="rAsc">Ascending</option>
           <option value="rDesc">Descending</option>
         </select>
+        <label className="sort-by">Genres filter: </label>
         <select className="filter-genres" name="genres" onChange={handleFilterGenres}>
           <option value="All">Select video game ganres: </option>
             {genres && genres.length > 0 ? genres.map(mp => (
               <option key={mp.id} value={mp.name} >{mp.name}</option>
             )) : null}
+        </select>
+        <label className='sort-by'>Created filter: </label>
+        <select className="filter-created" name="created" onChange={handleFilterGenres}>
+          <option value="All">Select option: </option>
+          <option value="created">Created</option>
+          <option value="api">From api</option>
+
+        
         </select>
       </div>
       <div className='paginate-container'>

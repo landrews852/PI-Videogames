@@ -2,6 +2,7 @@ const { Videogame, Genre, Op } = require("../db");
 const axios = require("axios");
 const { API_KEY } = process.env;
 const { loadDb } = require('../loadDb');
+const {uuidv4} = require('uuid');
 
 
 const getDbInfo = async () => {
@@ -57,38 +58,26 @@ const getVideogames = async (req, res) => {
 // };
   
 const getVideogameById = async (req, res) => {
-  const {id} = req.params;
-  console.log(req.params);
+  const { id } = req.params;
   try {
-    if(id < 10) {
-    const {videogameId} = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
-    // const videogame = []
-    console.log(videogameId);
-    videogameId
-      ? res.status(200).json(videogameId.data)
-      : res.status(404).send('Not found... ):');
-      // const videogame = videogameId.values.filter(mp => {
-        // return {
-        //   img: mp.background_image,
-        //   name: mp.name,
-        //   genres: mp.genres.map(e => e.name),
-        //   description: mp.description,
-        //   released: mp.released,
-        //   rating: mp.rating,
-        //   platforms: mp.platforms.map(e => e.platform.name),
-        // };
-      //   });
-      //   console.log(videogame, 'videogame');
-      // res.status(200).json(videogame);
-    } else {
-      const videogame = await getAllVideogames();
-      const videogameId = videogame.find((e) => e.id === id);
-      videogameId
-      ? res.status(200).json(videogameId)
-      : res.status(404).send('Not found... ):');
+    if (id.length < 10) {
+      const game = await axios.get(
+        `https://api.rawg.io/api/games/${id}?key=${API_KEY}`
+      );
+      return res.json(game.data);
+    }
+    if (id.length > 10) {
+      const dbGame = await Videogame.findOne({
+        where: {
+          id: id,
+        },
+        include: [Genre],
+      });
+      return res.json(dbGame);
     }
   } catch (error) {
-    res.status(500).send(error);
+    console.log(error);
+    res.status(404);
   }
 };
 
@@ -156,46 +145,74 @@ const getVideogameByName = async (req, res) => {
 //   }
 // };
 
+// const addVideogame = async (req, res) => {
+//   try {
+//     const { name, description, released, rating, genres, platforms, gId } = req.body;
+//     console.log('will add videogame', req.body);
+
+//     const validateVideogame = await Videogame.findOne({
+//       where: {
+//         name: name,
+//       },
+//     });
+
+//     if (!name || !description || !released || !rating || !gId || !platforms ) {
+//       res.status(404).json('Please complete all fields.');
+//     }
+
+//     if (validateVideogame) {
+//       res.status(404).json('This Videogame already exist.');
+//     } else {
+//       // const id = uuidv4();
+//       const newVideogame = await Videogame.create({
+//         // id,
+//         name,
+//         description,
+//         released,
+//         rating,
+//         gId,
+//         platforms,
+//         createdInDb: true
+//       });
+
+//       for (const genreId of gId) {
+//         await newVideogame.addGenre(genreId);
+//       }
+
+//       res.status(200).send('OK');
+//     }
+//   } catch (error) {
+//     console.log('errro', error);
+//     res.status(500).send(error);
+//   }
+// };
+
+
+/**
+ * 
+ * @param {obj} req 
+ * @param {obj} res 
+ */
 const addVideogame = async (req, res) => {
-  try {
-    const { name, description, released, rating, genres, platforms, gId } = req.body;
-    console.log('will add videogame', req.body);
+  let { name, description, released, rating, platforms, gId } = req.body;
+  let createVideogame = await Videogame.create({
+    apiId: uuidv4,
+    name, 
+    description,
+    released,
+    rating,
+    platforms,
+    gId,
+    createdInDb: true
+  });
 
-    const validateVideogame = await Videogame.findOne({
-      where: {
-        name: name,
-      },
-    });
+  let DbGenre = await Genre.findAll({
+    where: { name: gId },
+  });
+  console.log(DbGenre)
+  createVideogame.addGenres(DbGenre);
 
-    if (!name || !description || !released || !rating || !genres || !platforms || !gId) {
-      res.status(404).json('Please complete all fields.');
-    }
-
-    if (validateVideogame) {
-      res.status(404).json('This Videogame already exist.');
-    } else {
-      // const id = uuidv4();
-      const newVideogame = await Videogame.create({
-        // id,
-        name,
-        description,
-        released,
-        rating,
-        genres,
-        platforms,
-        createdInDb: true
-      });
-
-      for (const genreId of gId) {
-        await newVideogame.addGenre(genreId);
-      }
-
-      res.status(200).send('OK');
-    }
-  } catch (error) {
-    console.log('errro', error);
-    res.status(500).send(error);
-  }
+  res.status(200).send(createVideogame);
 };
 
 // const addVideogame = async (req, res) => {

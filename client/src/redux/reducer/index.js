@@ -48,16 +48,6 @@ const initialState = {
             ...state,
             platforms: platformsUnique,
           };
-
-      // case "GET_PLATFORMS":
-      //   // let platf = action.payload === "all" ? state.videogames : state.videogames.filter((elem)=>elem.platforms.includes(action.payload))
-      //   return {
-
-      //       ...state,
-      //       platforms: action.payload.map(elem=>elem.platforms).flat()
-            
-      //   }
-
   
       case 'SET_SORT':
         const asc = action.payload.asc;
@@ -72,37 +62,6 @@ const initialState = {
         };
         
       case 'RATING_SORT':
-
-        // const sortByRating =
-        // action.payload === "rAsc"
-        // ? state.allVideogames.sort((a, b) => b.rating - a.rating)
-        // : state.allVideogames.sort((a, b) => a.rating - b.rating);
-
-        // return {
-        //   ...state,
-        //   allVideogames: action.payload === "All" ? allVideogames : sortByRating,
-        // };
-
-      // const rAsc = action.payload.rAsc; 
-      // const rDesc = action.payload.rDesc; 
-      // // const rDesc = action.payload.rDesc; 
-      // function arraySort() {
-      //   if (rAsc) {
-      //     // console.log(a.rating - b.rating)
-      //     console.log(action.payload)
-      //     return state.videogames.sort((a, b) => a.rating - b.rating);
-      //   } 
-      //    if(rDesc) {
-      //     // console.log(b.rating-a.rating)
-      //     console.log(action.payload)
-      //     return state.videogames.sort((a, b) => b.rating - a.rating)
-      //   } else return state.videogames.sort((a, b) => b.rating.localeCompare(a.rating))
-      // };
-      // return {
-      //   ...state,
-      //   sortRating: arraySort()
-      // };
-
         let arraySort1 =
         action.payload === "rAsc"
           ? state.videogames.sort(function (a, b) {
@@ -129,22 +88,47 @@ const initialState = {
       };
   
       case 'FILTER_BY_GENRES':
-        const genres = state.genres
+        const filtered = state.allVideogames
         // const allVideogames = state.videogames;
         console.log(action.payload)
         const genresFilter =
-          action.payload === 'All'
-            ? genres
-            : genres.filter( 
+          action.payload === "All"
+            ? filtered
+            : filtered.filter( 
                 (videogame) =>
                 // videogame.gId.name === action.payload
-                videogame.genres.includes(action.payload)
+                videogame.gId.includes(action.payload)
                 );
-                // console.log(allVideogames.gId)
+          console.log(genresFilter)
                 
         return {
           ...state,
-          allVideogames: genresFilter,
+          videogames: genresFilter,
+        };
+        
+      case 'FILTER_BY_CREATED':
+        const videogames = state.allVideogames
+        // const allVideogames = state.videogames;
+        console.log(action.payload)
+        function createdFilter() {
+          if(action.payload === 'All') {
+            return videogames 
+          } if (action.payload === "created") {
+            videogames.filter( 
+              (e) =>
+                e.createdInDb === true
+              );
+          } else {
+            videogames.filter( 
+              (e) =>
+                e.createdInDb === false
+              );
+          }}
+          console.log(createdFilter())
+                
+        return {
+          ...state,
+          videogames: createdFilter(),
         };
   
       default:

@@ -53,10 +53,11 @@ export function getDetail(id) {
 //   };
 // }
 
-export const addVideogame = (dataVid) => {
-  return function (dispatch) {
-    return axios.post(`http://localhost:3001/new`, dataVid).then((res) => {
-      dispatch({ type: 'POST_VIDEOGAME', payload: res.data });
+export const addVideogame = (payload) => {
+  return async function (dispatch) {
+    return axios.post(`http://localhost:3001/new`, payload).then((res) => {
+      dispatch({ type: 'POST_VIDEOGAME', 
+      payload: res.data });
     });
   };
 };
