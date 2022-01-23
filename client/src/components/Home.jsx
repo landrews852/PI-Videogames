@@ -11,6 +11,7 @@ import {
   setSort,
   ratingSort,
   filterByGenres,
+  filterByCreated,
 } from '../redux/actions';
 import SearchBar from './SearchBar';
 import './Home.css';
@@ -29,17 +30,17 @@ export default function Home() {
   // const [order, setOrder] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
+  // const [currentVideogame, setCurrentVideogame] = useState([]);
   const videogamesPerPage = 15;
 
   const indexOfLastVideogame = currentPage * videogamesPerPage;
   const indexOfFirstVideogame = indexOfLastVideogame - videogamesPerPage;
-  const currentVideogame = videogames.slice(
+  const currentVideogame = videogames?.slice(
     indexOfFirstVideogame,
     indexOfLastVideogame
-  );
-
+    );
   const paginated = (pageNumber) => setCurrentPage(pageNumber);
-
+  
   useEffect(() => {
     dispatch(getVideogames());
   }, []);
@@ -47,10 +48,9 @@ export default function Home() {
   function handleClick(e) {
     e.preventDefault();
     dispatch(getVideogames());
-    console.log(getVideogames);
+    setCurrentPage(1);
+    // console.log(getVideogames);
   }
-
-
 
   function handleSortBy(e) {
     dispatch(setSort(e.target.value === 'asc'));
@@ -62,14 +62,12 @@ export default function Home() {
     setCurrentPage(1);
   }
 
-  // function handleRatingSort(e) {
-  //   dispatch(ratingSort(e.target.value));
-  //   setCurrentPage(1);
-  //   setOrder(e.target.value);
-  // }
-
   function handleFilterGenres(e) {
     dispatch(filterByGenres(e.target.value));
+    setCurrentPage(1);
+  }
+  function handleFilterCreated(e) {
+    dispatch(filterByCreated(e.target.value));
     setCurrentPage(1);
   }
 
@@ -78,8 +76,8 @@ export default function Home() {
     dispatch(getGenres())
 }, [dispatch])
 
-  
-  console.log(videogames);
+  console.log({"home": videogames});
+
   return (
     <div className="home">
       <div className="main_container">
@@ -93,41 +91,49 @@ export default function Home() {
             handleClick(e);
           }}
         >
-          Back
+          Refresh
         </button>
       </div>
       <div className="search-bar">
         <SearchBar />
       </div>
       <div className="select_container">
-        <label className="sort-by">Alphabetical order: </label>
+        <label className="label">Alphabetical order: </label>
         <select onChange={(e) => handleSortBy(e)}>
-          <option value="All">Sort by</option>
+          <option disabled>Select an option:</option>
+          <option hidden>Select an option</option>
           <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
         </select>
-        </div>
-        <div className="select_container">
-        <label className="sort-by">Rating order: </label>
+      </div>
+        {/* <br/> */}
+      <div className="select_container">
+        <label className="label">Rating order: </label>
         <select onChange={(e) => handleRatingSort(e)}>
-          <option value="rAsc">Select the parameter</option>
+          <option disabled>Select an option:</option>
+          <option hidden>Select an option</option>
           <option value="rAsc">Ascending</option>
           <option value="rDesc">Descending</option>
         </select>
-        <label className="sort-by">Genres filter: </label>
+      </div>
+      <div className="select_container">
+        <label className="label">Genres filter: </label>
         <select className="filter-genres" name="genres" onChange={handleFilterGenres}>
-          <option value="All">Select video game ganres: </option>
+          <option disabled>Select an option:</option>
+          <option hidden>Select an option</option>
             {genres && genres.length > 0 ? genres.map(mp => (
               <option key={mp.id} value={mp.name} >{mp.name}</option>
             )) : null}
         </select>
-        <label className='sort-by'>Created filter: </label>
-        <select className="filter-created" name="created" onChange={handleFilterGenres}>
-          <option value="All">Select option: </option>
-          <option value="created">Created</option>
-          <option value="api">From api</option>
-
-        
+      </div>
+      <div className="select_container">
+        <label className='label'>Created filter: </label>
+        <select className="filter-created" name="created" onChange={handleFilterCreated}>
+          <option disabled>Select an option:</option>
+          <option hidden>Select an option</option>
+          <option value="All">All</option>
+          <option value="Created">Created</option>
+          <option value="Api">From api</option>
         </select>
       </div>
       <div className='paginate-container'>
@@ -144,7 +150,7 @@ export default function Home() {
           ? currentVideogame.map((videogame) => {
               return (
                 <div key={videogame.id}>
-                  <Link to={'/home/' + videogame.apiId?videogame.apiId:videogame.id}>
+                  <Link to={'/home/' + videogame.id}>
                     <Card
                       className="card"
                       img={videogame.img}

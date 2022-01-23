@@ -4,7 +4,6 @@ const initialState = {
     detail: [],
     genres: [],
     platforms: [],
-    sortRating: [],
   };
   
   function rootReducer(state = initialState, action) {
@@ -31,7 +30,6 @@ const initialState = {
       case 'POST_VIDEOGAME':
         return {
           ...state,
-          videogames: action.payload,
         };
   
       case 'GET_GENRES':
@@ -42,7 +40,7 @@ const initialState = {
 
       case 'GET_PLATFORMS':
         // console.log('GET_PLATFORMS', action.payload);
-        const platforms = action.payload.map(e => e.platforms).flat()
+        const platforms = action.payload.map(e => e.platform).flat()
         const platformsUnique = [...new Set(platforms)]
           return {
             ...state,
@@ -53,7 +51,7 @@ const initialState = {
         const asc = action.payload.asc;
         return {
           ...state,
-          allVideogames: state.videogames.sort((a, b) => {
+          videogames: state.videogames.sort((a, b) => {
             if (asc) {
               return a.name.localeCompare(b.name);
             }
@@ -84,13 +82,12 @@ const initialState = {
             });
       return {
         ...state,
-        allVideogames: arraySort1,
+        videogames: arraySort1,
       };
   
       case 'FILTER_BY_GENRES':
         const filtered = state.allVideogames
         // const allVideogames = state.videogames;
-        console.log(action.payload)
         const genresFilter =
           action.payload === "All"
             ? filtered
@@ -108,28 +105,36 @@ const initialState = {
         
       case 'FILTER_BY_CREATED':
         const videogames = state.allVideogames
-        // const allVideogames = state.videogames;
-        console.log(action.payload)
+
         function createdFilter() {
-          if(action.payload === 'All') {
-            return videogames 
-          } if (action.payload === "created") {
-            videogames.filter( 
+          console.log({"reducer": videogames})
+          if(action.payload === 'All') return videogames 
+
+          if (action.payload === "Created") {
+            const created = videogames.filter( 
               (e) =>
                 e.createdInDb === true
               );
-          } else {
-            videogames.filter( 
-              (e) =>
-                e.createdInDb === false
-              );
-          }}
+              return created
+          } 
+          
+          if (action.payload === "Api")  {
+            const api = videogames.filter(e => e.createdInDb === false);
+              return api
+          }
+        }
+
           console.log(createdFilter())
                 
         return {
           ...state,
           videogames: createdFilter(),
         };
+
+      case 'VALIDATE':
+        return {
+          ...state,
+        };     
   
       default:
         return state;

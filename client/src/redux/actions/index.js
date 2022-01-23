@@ -53,9 +53,9 @@ export function getDetail(id) {
 //   };
 // }
 
-export const addVideogame = (payload) => {
+export function addVideogame (payload) {
   return async function (dispatch) {
-    return axios.post(`http://localhost:3001/new`, payload).then((res) => {
+    return await axios.post(`http://localhost:3001/new`, payload).then((res) => {
       dispatch({ type: 'POST_VIDEOGAME', 
       payload: res.data });
     });
@@ -119,6 +119,22 @@ export function filterByGenres(payload) {
     type: 'FILTER_BY_GENRES',
     payload,
   };
+}
+
+export function filterByCreated(payload) {
+  return {
+    type: 'FILTER_BY_CREATED',
+    payload,
+  };
+}
+
+export async function validate(payload) {
+  return async function (dispatch) {
+    return await axios.use('http://localhost:3001/validate', payload).then((res) => {
+      dispatch({ type: 'VALIDATE', 
+      payload: res.boolean });
+    });
+  }
 }
 
 // export function deleteActivity(id) {

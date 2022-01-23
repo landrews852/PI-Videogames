@@ -1,9 +1,9 @@
 const { Router } = require('express');
 const router = Router();
-const { getGenres } = require('../controllers/controllerGenres');
+const { getGenres, addGenre } = require('../controllers/controllerGenres');
 
 router.get('/genres', getGenres);
-// router.get('/genres/:id', getGenresId);
+router.post('/newgenre', addGenre);
 
 
 module.exports = router;

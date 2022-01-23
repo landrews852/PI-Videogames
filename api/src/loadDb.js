@@ -23,18 +23,18 @@ const getApiInfo = async () => {
       ...apiUrl5.data.results,
     ].map(mp => {
       return {
-        apiId: mp.id,
+        id: mp.id,
         name: mp.name,
         description: mp.description,
-        platforms: mp.platforms.map(e => e.platform.name),
+        platform: mp.platforms.map(e => e.platform.name),
         img: mp.background_image,
         rating: mp.rating,
         released: mp.released,
-        genres: mp.genres.map(e => e.name),
         gId: mp.genres.map(e => e.name),
         createdInDb: false
       };
     });
+    // console.log("2", games);
     return games;
 });
 };
@@ -90,7 +90,7 @@ async function loadGenreDb() {
       const genres = await getApiGenres();
       await Promise.all(
         genres.map(async (e) => {
-          console.log(e);
+          // console.log(e);
           await Genre.create(e);
         })
       );
