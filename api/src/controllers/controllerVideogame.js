@@ -8,7 +8,7 @@ const { v4: uuidv4 } = require('uuid');
 const getDbInfo = async () => {
   return await Videogame.findAll({
     include: [Genre],
-  });
+  }); 
 };
   
 const getAllVideogames = async () => {
@@ -71,6 +71,9 @@ const getVideogameByName = async (req, res) => {
   const {name} = req.query;
   if (name) {
     try {
+      const videogamesDb = getAllVideogames();
+      const videogamesDbName = await videogamesDb.includes(name);
+      // const videogamesDbName = await videogamesDb.filter((e) => e.name === name);
       // const videogamesDb = getAllVideogames()
       // const videogamesDbName = videogamesDb.filter(e => e.name.toLowerCase() === name.toLowerCase())
       const videogamesApiName = await axios.get(`https://api.rawg.io/api/games?search=${name}&key=${API_KEY}`)
@@ -88,6 +91,10 @@ const getVideogameByName = async (req, res) => {
             gId: mp.genres.map(e => e.name),
           };
         })
+        if(videogamesDbName.length) {
+          const games = apiGames.concat(videogamesDbName);
+          res.status(200).json(games);
+        }
         // console.log(apiGames);
         // if(videogamesDbName) {
         //   const gamesByName = videogamesDbName.concat(apiGames)

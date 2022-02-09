@@ -55,8 +55,8 @@ const plataformas = () => {
                 <br/>
                 <p className='text'>{"Genre: " + videogame.genres?.map(e => " " + e.name)}</p>
                 <br/>
+                {/* <p className='text'>Description: {videogame.description}</p> */}
                 <p className='text' dangerouslySetInnerHTML={{ __html: videogame.description }}></p>
-                {/* <p  className='text'>Description: {videogame.description}</p> */}
                 </div>
             </div>
         )

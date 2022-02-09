@@ -14,4 +14,5 @@ router.get("/videogames/:id", getVideogameById);
 router.post("/new", addVideogame);
 router.use("/validate", validate);
 
+
 module.exports = router;

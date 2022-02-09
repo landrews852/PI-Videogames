@@ -80,61 +80,67 @@ export default function Home() {
 
   return (
     <div className="home">
-      <div className="main_container">
-        <h1 className='text-title'>All videogames for you!</h1>
-        <Link to="/new">
-          <button className="btn">Create new Videogame</button>
-        </Link>
-        <button
-          className="btn"
-          onClick={(e) => {
-            handleClick(e);
-          }}
-        >
-          Refresh
-        </button>
+      <div className="home-header">
+        <div className='header-buttons'>
+          <Link to="/new">
+            <button className="btn">Create new Videogame</button>
+          </Link>
+          <button
+            className="btn"
+            onClick={(e) => {
+              handleClick(e);
+            }}
+            >
+            Refresh
+          </button>
+        </div>
+        <div className="search-bar">
+          <SearchBar />
+        </div>
       </div>
-      <div className="search-bar">
-        <SearchBar />
-      </div>
-      <div className="select_container">
-        <label className="label">Alphabetical order: </label>
-        <select onChange={(e) => handleSortBy(e)}>
-          <option disabled>Select an option:</option>
-          <option hidden>Select an option</option>
-          <option value="asc">Ascending</option>
-          <option value="desc">Descending</option>
-        </select>
-      </div>
-        {/* <br/> */}
-      <div className="select_container">
-        <label className="label">Rating order: </label>
-        <select onChange={(e) => handleRatingSort(e)}>
-          <option disabled>Select an option:</option>
-          <option hidden>Select an option</option>
-          <option value="rAsc">Ascending</option>
-          <option value="rDesc">Descending</option>
-        </select>
-      </div>
-      <div className="select_container">
-        <label className="label">Genres filter: </label>
-        <select className="filter-genres" name="genres" onChange={handleFilterGenres}>
-          <option disabled>Select an option:</option>
-          <option hidden>Select an option</option>
-            {genres && genres.length > 0 ? genres.map(mp => (
-              <option key={mp.id} value={mp.name} >{mp.name}</option>
-            )) : null}
-        </select>
-      </div>
-      <div className="select_container">
-        <label className='label'>Created filter: </label>
-        <select className="filter-created" name="created" onChange={handleFilterCreated}>
-          <option disabled>Select an option:</option>
-          <option hidden>Select an option</option>
-          <option value="All">All</option>
-          <option value="Created">Created</option>
-          <option value="Api">From api</option>
-        </select>
+      <h1 className='text-title'>All videogames for you!</h1>
+      <div className="form-main-container">
+      <br/>
+        <div className="select_container">
+          <label className="label">Alphabetical order: </label>
+          <select onChange={(e) => handleSortBy(e)}>
+            <option disabled>Select an option:</option>
+            <option hidden>Select an option</option>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </div>
+          {/* <br/> */}
+        <div className="select_container">
+          <label className="label">Rating order: </label>
+          <select onChange={(e) => handleRatingSort(e)}>
+            <option disabled>Select an option:</option>
+            <option hidden>Select an option</option>
+            <option value="rAsc">Ascending</option>
+            <option value="rDesc">Descending</option>
+          </select>
+        </div>
+        <div className="select_container">
+          <label className="label">Genres filter: </label>
+          <select className="filter-genres" name="genres" onChange={handleFilterGenres}>
+            <option disabled>Select an option:</option>
+            <option hidden>Select an option</option>
+              {genres && genres.length > 0 ? genres.map(mp => (
+                <option key={mp.id} value={mp.name} >{mp.name}</option>
+                )) : null}
+          </select>
+        </div>
+        <div className="select_container">
+          <label className='label'>Created filter: </label>
+          <select className="filter-created" name="created" onChange={handleFilterCreated}>
+            <option disabled>Select an option:</option>
+            <option hidden>Select an option</option>
+            <option value="All">All</option>
+            <option value="Created">Created</option>
+            <option value="Api">From api</option>
+          </select>
+        </div>
+        <br/>
       </div>
       <div className='paginate-container'>
         <div className="paginate">
@@ -148,7 +154,7 @@ export default function Home() {
       <div className="cards">
         {currentVideogame.length
           ? currentVideogame.map((videogame) => {
-              return (
+            return (
                 <div key={videogame.id}>
                   <Link to={'/home/' + videogame.id}>
                     <Card
