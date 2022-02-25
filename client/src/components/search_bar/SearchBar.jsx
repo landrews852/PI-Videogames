@@ -1,9 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getVideogamesName } from '../redux/actions';
+import { getVideogamesName } from '../../redux/actions';
 // import { useHistory } from 'react-router-dom';
-import "./SearchBar.css";
+import s from "./SearchBar.module.css";
+// import Swal from 'sweetalert2'
 
 
 export default function SearchBar() {
@@ -20,16 +21,20 @@ export default function SearchBar() {
         e.preventDefault();
         dispatch(getVideogamesName(name));
         setName('');
+    //     Swal.fire({
+    //         title: 'Please fill in the field.',
+    //         text: 'Ve al carrito para ver los productos agregados',
+    // })
     }
 
     return (
       <div className="search-bar">
-           <input className="input"
+           <input className={s.input}
            value={name} type="text"
            placeholder="Search here..."
               onChange={handleInputChange}
            />
-           <button className="btn" type="submit" onClick={handleSubmit}>Search</button>
+           <button className={s.btn} type="submit" onClick={handleSubmit}>Search</button>
       </div>
     )
 

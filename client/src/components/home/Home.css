@@ -1,0 +1,25 @@
+.home {
+  background: url('../../img/936820.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
+.home-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  margin-bottom: auto;
+  background-color: rgb(51, 50, 56);
+  box-shadow: black 0px 0px 10px;
+}
+
+.paginate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+}

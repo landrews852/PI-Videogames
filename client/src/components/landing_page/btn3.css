@@ -1,20 +1,20 @@
 /* html,
 body {
-  height: 100%;
+  min-height: 100vh;
 } */
 
 .wrap {
-  height: 100%;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
-  bottom: -30%;
+  bottom: 15%;
   left: 50%;
   right: 50%;
 }
 
-.button {
+.btn-lp {
   min-width: 150px;
   min-height: 40px;
   font-family: 'Nunito', sans-serif;
@@ -23,25 +23,26 @@ body {
   letter-spacing: 1.3px;
   font-weight: 700;
   color: #555555;
-  background: #6b2700;
+  /* background: #6b2700; */
   background: linear-gradient(
     90deg,
     rgb(230, 169, 129) 0%,
     rgb(209, 142, 79) 100%
   );
   border: none;
-  border-radius: 0px;
+  border-radius: 25%;
   box-shadow: 12px 12px 24px rgba(209, 131, 79, 0.64);
   transition: all 0.3s ease-in-out 0s;
   cursor: pointer;
   outline: none;
   position: relative;
   padding: 10px;
+  transition: all 0.3s ease-in-out 0s;
 }
 
-button::before {
+.btn-lp::before {
   content: '';
-  border-radius: 0px;
+  border-radius: 25%;
   min-width: calc(150px + 10px);
   min-height: calc(40px + 10px);
   border: 1px solid #ff9100;
@@ -51,21 +52,26 @@ button::before {
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
-  transition: all 0.3s ease-in-out 0s;
+  /* transition: all 0.3s ease-in-out 0s; */
 }
 
-.button:hover,
-.button:focus {
-  color: #313133;
+.btn-lp:hover,
+.btn-lp:focus {
+  color: #ffffff;
+  background: linear-gradient(
+    90deg,
+    rgb(228, 153, 104) 0%,
+    rgb(209, 130, 56) 100%
+  );
   transform: translateY(-6px);
 }
 
-button:hover::before,
-button:focus::before {
+.btn-lp:hover::before,
+.btn-lp:focus::before {
   opacity: 1;
 }
 
-button::after {
+.btn-lp::after {
   content: '';
   width: 30px;
   height: 30px;
@@ -79,8 +85,8 @@ button::after {
   animation: ring 1.5s infinite;
 }
 
-button:hover::after,
-button:focus::after {
+.btn-lp:hover::after,
+.btn-lp:focus::after {
   animation: none;
   display: none;
 }

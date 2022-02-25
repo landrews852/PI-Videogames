@@ -1,29 +1,24 @@
 body {
-  /* background-color: black; */
-  background: url("./img/home.jpeg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* .h1.h2.h3.h4.h5.h6 {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-} */
+
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
 .label {
-  font-size: 0.8rem;
-  font-weight: bold;
-  color: #fff;
+  font-size: 1rem;
+  font-weight: 900;
+  background: -webkit-linear-gradient(#ac4d00, #ff9151);
+  background-clip: 0;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 0.5rem;
@@ -40,7 +35,7 @@ code {
   font-size: 70px;
   /* color: #07c5ff; */
   color: #07a0ff;
-  font-family: "Arial Black", Gadget, sans-serif;
+  font-family: 'Arial Black', Gadget, sans-serif;
   text-shadow: 0px 0px 0 rgb(-10, 180, 238), 0px 1px 0 rgb(-28, 162, 220),
     0px 2px 0 rgb(-45, 145, 203), 0px 3px 0 rgb(-62, 128, 186),
     0px 4px 0 rgb(-80, 110, 168), 0px 5px 0 rgb(-97, 93, 151),
@@ -51,7 +46,7 @@ code {
 .sort-by {
   font-size: 30px;
   color: #ffffff;
-  font-family: "Arial Black", Gadget, sans-serif;
+  font-family: 'Arial Black', Gadget, sans-serif;
   /* text-shadow: 0px 0px 0 rgb(-10, 143, 238), 0px -1px 0 rgb(-28, 125, 220),
     0px -2px 0 rgb(-45, 108, 203), 0px -3px 0 rgb(-62, 91, 186),
     0px -4px 0 rgb(-80, 73, 168), 0px -5px 0 rgb(-97, 56, 151),
@@ -90,10 +85,10 @@ code {
 
 .btn {
   box-shadow: 0px 1px 0px 0px #383838;
-  background: linear-gradient(to bottom, #2b325e 5%, #1c3f6b 100%);
+  background: linear-gradient(to bottom, #ac4d00 5%, #833f00 100%);
   background-color: #2b325e;
   border-radius: 15px;
-  border: 2px solid #3b3b3b;
+  /* border: 2px solid #3b3b3b; */
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
@@ -107,11 +102,12 @@ code {
   margin-left: 10px;
 }
 .btn:hover {
-  background: linear-gradient(to bottom, #1c3f6b 5%, #2b325e 100%);
-  background-color: #1c3f6b;
+  background: linear-gradient(to bottom, #c45800 5%, #833f00 100%);
+  /* background-color: #1c3f6b; */
 }
 .btn:active {
   position: relative;
+  background: linear-gradient(to bottom, #a04800 5%, #833f00 100%);
   top: 1px;
 }
 

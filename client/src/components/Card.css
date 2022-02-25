@@ -28,7 +28,7 @@
 }
 
 a:link {
-  color: rgb(255, 0, 0);
+  color: rgb(0, 0, 0);
   text-decoration: none;
   text-decoration-style: none;
   text-decoration-color: none;
@@ -60,6 +60,7 @@ a:link {
 }
 
 .card:hover {
-  box-shadow: 0 3px 6px rgb(174, 236, 255), 0 3px 6px rgba(0, 0, 0, 0.23);
-  transform: translateY(-5px);
+  box-shadow: 0 3px 6px rgb(255, 197, 174), 0 3px 6px rgba(0, 0, 0, 0.23);
+  /* transform: translateY(-5px); */
+  transform: scale(1.02);
 }

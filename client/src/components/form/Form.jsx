@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getGenres, addVideogame, getPlatforms, validate } from "../redux/actions"
+import { getGenres, addVideogame, getPlatforms, validate } from "../../redux/actions"
 import { Link, useNavigate } from "react-router-dom"
 import "./Form.css"
+import Swal from 'sweetalert2'
+
 import { isNull } from "util"
 
 export default function Form(){
@@ -38,6 +40,10 @@ export default function Form(){
         
         try {
             await dispatch(addVideogame(game))
+                Swal.fire({
+                title: 'VideoGame created!',
+                text: 'You have been redirected to home page to see all videogames',
+            })
             navigate("/home")
         }
         catch(err) {
@@ -142,26 +148,25 @@ return (
         <br/>
         <form className="form" onSubmit={handleOnSubmit}>
             <div>
-            <label className="label">Name: </label>
-            <input type="text" className="name-input" name="name" value={game.name} placeholder="Name here..." onChange={handleChange} />
-        </div>
-
-        <div>
-            <label className="label">Description: </label>
-            <input type="text" className="description-input" name="description" value={game.description} placeholder="Description here..." onChange={handleChange} />
-        </div>
-        {/* <div>
-            <label className="label">Image: </label>
-            <input type="text" className="img-input" name="img" value={game.img} placeholder="Img url here..." onChange={handleChange} />
-        </div> */}
-        <div>
-            <label className="label">Released date: </label>
-            <input type="date" className="released-input" name="released" value={game.released} placeholder="Released date here..." onChange={handleChange} />
-        </div>
-        <div>
-            <label className="label">Rating: </label>
-            <input type="number" className="rating-input" name="rating" min="0" value={game.rating} placeholder="Rating here..." onChange={handleChange} />
-        </div>
+                <label className="label">Name: </label>
+                <input type="text" className="name-input" name="name" value={game.name} placeholder="Name here..." onChange={handleChange} />
+            </div>
+            <div>
+                <label className="label">Description: </label>
+                <input type="text" className="description-input" name="description" value={game.description} placeholder="Description here..." onChange={handleChange} />
+            </div>
+            {/* <div>
+                <label className="label">Image: </label>
+                <input type="text" className="img-input" name="img" value={game.img} placeholder="Img url here..." onChange={handleChange} />
+            </div> */}
+            <div>
+                <label className="label">Released date: </label>
+                <input type="date" className="released-input" name="released" value={game.released} placeholder="Released date here..." onChange={handleChange} />
+            </div>
+            <div>
+                <label className="label">Rating: </label>
+                <input type="number" className="rating-input" name="rating" min="0" value={game.rating} placeholder="Rating here..." onChange={handleChange} />
+            </div>
             <div>
                 <label className="label">Platforms: </label>
                 <select className="select" name="platforms" onChange={handleSelectPlatform} value={game.platform}>
@@ -193,9 +198,9 @@ return (
                 <button className="btn addBtn" disabled={disabledButton}>Add your video game</button>
             </div>
         </form>
-            <div><p className="label">Platforms selected: </p>{game.platform?.map(e => {return (<div className="delDiv"><li className="label" key={e} >{e}</li><button className="del" onClick={() => handleDeleteP(e)} value={e}>Delete</button></div>)})}</div>
-            <div><p className="label">Genres selected: </p>{game.gId?.map(e => {return (<div className="delDiv"><li className="label" key={e}>{e}</li><button className="del" onClick={() => handleDeleteG(e)} key={e}>Delete</button></div>)})}</div>
-                <Link to="/home"><button className="btn back">Back</button></Link>
-</div>
-)
+        <div><p className="label">Platforms selected: </p>{game.platform?.map(e => {return (<div className="delDiv"><li className="label" key={e} >{e}</li><button className="del" onClick={() => handleDeleteP(e)} value={e}>Delete</button></div>)})}</div>
+        <div><p className="label">Genres selected: </p>{game.gId?.map(e => {return (<div className="delDiv"><li className="label" key={e}>{e}</li><button className="del" onClick={() => handleDeleteG(e)} key={e}>Delete</button></div>)})}</div>
+            <Link to="/home"><button className="btn back">Back</button></Link>
+        </div>
+    )
 }

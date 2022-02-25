@@ -20,9 +20,9 @@ export default function Paginate(props) {
           pageNumbers.map((number) => (
             <li key={number} className="page-item">
               <button
+                className="page-link"
                 onClick={() => props.paginate(number)}
                 href="/#"
-                className="page-link"
               >
                 {number}
               </button>

@@ -19,10 +19,10 @@ ul.pagination li a {
 }
 
 .page-link {
-  background-color: #597bc5;
+  background: linear-gradient(to bottom, #ac4d00 5%, #833f00 100%);
   border: none;
   border-radius: 2px;
-  color: #000000;
+  color: #ffffff;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -34,20 +34,12 @@ ul.pagination li a {
 }
 
 .page-link:hover {
-  background-color: #5588c2;
-  color: #000000;
+  background: linear-gradient(to bottom, #c45800 5%, #833f00 100%);
+  /* color: #000000; */
 }
 
-.button {
-  background-color: #3e6cff;
-  border: none;
-  color: #4f7dc2;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  margin: 11px 5px;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  border-radius: 10px;
+.page-link:active {
+  position: relative;
+  background: linear-gradient(to bottom, #a04800 5%, #833f00 100%);
+  top: 1px;
 }
